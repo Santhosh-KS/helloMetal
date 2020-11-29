@@ -26,12 +26,25 @@ class HelloMetalRenderrer:NSObject {
     let library = device.makeDefaultLibrary()
     let vertexFunction = library?.makeFunction(name: "basic_vertex_function")
     let fragmentFunction = library?.makeFunction(name: "basic_fragment_function")
-    let descriptor = MTLRenderPipelineDescriptor()
-    descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-    descriptor.vertexFunction = vertexFunction
-    descriptor.fragmentFunction = fragmentFunction
+    let renderPipeLineDescriptor = MTLRenderPipelineDescriptor()
+    renderPipeLineDescriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
+    renderPipeLineDescriptor.vertexFunction = vertexFunction
+    renderPipeLineDescriptor.fragmentFunction = fragmentFunction
+    
+    let vertexDescriptor = MTLVertexDescriptor()
+    vertexDescriptor.attributes[0].bufferIndex = 0
+    vertexDescriptor.attributes[0].format = .float3
+    vertexDescriptor.attributes[0].offset = 0
+    
+    vertexDescriptor.attributes[1].bufferIndex = 0
+    vertexDescriptor.attributes[1].format = .float4
+    vertexDescriptor.attributes[1].offset = MemoryLayout<SIMD3<Float>>.size
+    
+    vertexDescriptor.layouts[0].stride = MemoryLayout<Vertex>.stride
+    renderPipeLineDescriptor.vertexDescriptor = vertexDescriptor
+    
     do {
-      renderPipelineState = try device.makeRenderPipelineState(descriptor: descriptor)
+      renderPipelineState = try device.makeRenderPipelineState(descriptor: renderPipeLineDescriptor)
     } catch let error as NSError {
       print("\(error)")
     }
@@ -40,7 +53,7 @@ class HelloMetalRenderrer:NSObject {
   func setupVerticies() {
     let size:Float = 0.6
     verticies = [
-      /* // Basic approach
+      /* /// Basic approach
       Vertex(position: SIMD3<Float>(size,size,0), color:SIMD4<Float>(1,0,0,1)), // v0
       Vertex(position: SIMD3<Float>(-size,size,0), color:  SIMD4<Float>(0,1,0,1)), // v1
       Vertex(position: SIMD3<Float>(-size,-size,0), color: SIMD4<Float>(0,0,1,1)), // v2
