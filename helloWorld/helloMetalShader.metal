@@ -15,7 +15,7 @@ vertex FirstVertexOut basic_vertex_function(const device FirstVertexIn *verticie
   
   FirstVertexOut vOut;
   vOut.position = float4(verticies[vertexId].position, 1);
-  vOut.color = verticies[vertexId].color * 3.5;
+  vOut.color = verticies[vertexId].color * 1.5;
  // vOut.color = verticies[vertexId].color;
   return vOut;
   

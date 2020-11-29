@@ -4,7 +4,11 @@ class HelloMetalRenderrer:NSObject {
   var renderPipelineState:MTLRenderPipelineState! = nil
   var commandQueue:MTLCommandQueue! = nil
   var vertexBuffer:MTLBuffer! = nil
+  var indiciesBuffer:MTLBuffer! = nil
+  
   var verticies:[Vertex]! = nil
+  var indicies:[UInt16]! = nil
+  
   
   init(device:MTLDevice) {
     super.init()
@@ -34,16 +38,32 @@ class HelloMetalRenderrer:NSObject {
   }
   
   func setupVerticies() {
-    
+    let size:Float = 0.6
     verticies = [
-      Vertex(position: SIMD3<Float>(0,1,0), color:SIMD4<Float>(1,0,0,1)),
-      Vertex(position: SIMD3<Float>(-1,-1,0), color:  SIMD4<Float>(0,1,0,1)),
-      Vertex(position: SIMD3<Float>(1,-1,0), color: SIMD4<Float>(0,0,1,1))
+      /* // Basic approach
+      Vertex(position: SIMD3<Float>(size,size,0), color:SIMD4<Float>(1,0,0,1)), // v0
+      Vertex(position: SIMD3<Float>(-size,size,0), color:  SIMD4<Float>(0,1,0,1)), // v1
+      Vertex(position: SIMD3<Float>(-size,-size,0), color: SIMD4<Float>(0,0,1,1)), // v2
+      
+      Vertex(position: SIMD3<Float>(size,size,0), color:SIMD4<Float>(1,1,0,1)), // v0
+      Vertex(position: SIMD3<Float>(-size,-size,0), color:  SIMD4<Float>(0,1,1,1)), // v2
+      Vertex(position: SIMD3<Float>(size,-size,0), color: SIMD4<Float>(1,0,1,1)) // v3
+     */
+      
+      /// Indicies based approach
+      Vertex(position: SIMD3<Float>(size,size,0), color:SIMD4<Float>(1,0,0,1)), // v0
+      Vertex(position: SIMD3<Float>(-size,size,0), color:  SIMD4<Float>(0,1,0,1)), // v1
+      Vertex(position: SIMD3<Float>(-size,-size,0), color:  SIMD4<Float>(0,1,1,1)), // v2
+      Vertex(position: SIMD3<Float>(size,-size,0), color: SIMD4<Float>(1,0,1,1)) // v3
     ]
+    
+    indicies = [ 0,1,2, /*V0,V1,V2*/
+                 0,2,3 /* V0,V2,V3*/]
   }
   
   func setupVertexBuffer(device:MTLDevice) {
     vertexBuffer = device.makeBuffer(bytes: verticies, length: MemoryLayout<Vertex>.stride*verticies.count, options: [])
+    indiciesBuffer = device.makeBuffer(bytes: indicies, length: MemoryLayout<UInt16>.stride*indicies.count, options: [])
   }
 }
 
@@ -53,13 +73,17 @@ extension HelloMetalRenderrer:MTKViewDelegate {
   }
   
   func draw(in view: MTKView) {
-    //print("KSS DELIGATE")
+    
     guard let drawable = view.currentDrawable, let renderPassDescriptor = view.currentRenderPassDescriptor else { return }
     let commandBuffer = commandQueue.makeCommandBuffer()
     let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
     commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
     commandEncoder?.setRenderPipelineState(renderPipelineState)
-    commandEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+    /* // Method used to draw basic approach
+    commandEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: verticies.count)
+    */
+    // Met
+    commandEncoder?.drawIndexedPrimitives(type: .triangle, indexCount: indicies.count, indexType: .uint16, indexBuffer: indiciesBuffer, indexBufferOffset: 0, instanceCount: 1)
     
     // COMMAND ENCODER STUFF
     commandEncoder?.endEncoding()
