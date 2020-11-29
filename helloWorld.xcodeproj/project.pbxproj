@@ -13,6 +13,7 @@
 		2C8DC31525727F2000F3A681 /* helloMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DC31425727F2000F3A681 /* helloMetalView.swift */; };
 		2C8DC31C257284A500F3A681 /* helloMetalRenderrer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DC31B257284A500F3A681 /* helloMetalRenderrer.swift */; };
 		2C8DC3222572929A00F3A681 /* helloMetalShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DC3212572929A00F3A681 /* helloMetalShader.metal */; };
+		2C8DC3252572D5A400F3A681 /* helloTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8DC3242572D5A400F3A681 /* helloTypes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		2C8DC31425727F2000F3A681 /* helloMetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloMetalView.swift; sourceTree = "<group>"; };
 		2C8DC31B257284A500F3A681 /* helloMetalRenderrer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloMetalRenderrer.swift; sourceTree = "<group>"; };
 		2C8DC3212572929A00F3A681 /* helloMetalShader.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = helloMetalShader.metal; sourceTree = "<group>"; };
+		2C8DC3242572D5A400F3A681 /* helloTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helloTypes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				2C8DC30C25727BE500F3A681 /* helloWorld.entitlements */,
 				2C8DC31425727F2000F3A681 /* helloMetalView.swift */,
 				2C8DC31B257284A500F3A681 /* helloMetalRenderrer.swift */,
+				2C8DC3242572D5A400F3A681 /* helloTypes.swift */,
 				2C8DC3212572929A00F3A681 /* helloMetalShader.metal */,
 			);
 			path = helloWorld;
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8DC31C257284A500F3A681 /* helloMetalRenderrer.swift in Sources */,
+				2C8DC3252572D5A400F3A681 /* helloTypes.swift in Sources */,
 				2C8DC3222572929A00F3A681 /* helloMetalShader.metal in Sources */,
 				2C8DC30325727BE400F3A681 /* AppDelegate.swift in Sources */,
 				2C8DC31525727F2000F3A681 /* helloMetalView.swift in Sources */,

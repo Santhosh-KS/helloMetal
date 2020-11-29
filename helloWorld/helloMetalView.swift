@@ -8,7 +8,7 @@ class HelloMetalView: MTKView {
     self.device = MTLCreateSystemDefaultDevice()
     print("Pixel format \(self.colorPixelFormat)")
     self.colorPixelFormat = .bgra8Unorm
-    self.clearColor = MTLClearColor(red: 0.25, green: 0.6, blue: 0.3, alpha: 1.0)
+    self.clearColor = MTLClearColor(red: 0.25, green: 0.6, blue: 0.3, alpha: 0)
     
     self.renderrer = HelloMetalRenderrer(device: device!)
     self.delegate = renderrer
