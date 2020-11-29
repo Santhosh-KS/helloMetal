@@ -36,9 +36,9 @@ class HelloMetalRenderrer:NSObject {
   func setupVerticies() {
     
     verticies = [
-      Vertex(position: SIMD3<Float>(0,1,0)),
-      Vertex(position: SIMD3<Float>(-1,-1,0)),
-      Vertex(position: SIMD3<Float>(1,-1,0))
+      Vertex(position: SIMD3<Float>(0,1,0), color:SIMD4<Float>(1,0,0,1)),
+      Vertex(position: SIMD3<Float>(-1,-1,0), color:  SIMD4<Float>(0,1,0,1)),
+      Vertex(position: SIMD3<Float>(1,-1,0), color: SIMD4<Float>(0,0,1,1))
     ]
   }
   
@@ -60,6 +60,7 @@ extension HelloMetalRenderrer:MTKViewDelegate {
     commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
     commandEncoder?.setRenderPipelineState(renderPipelineState)
     commandEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+    
     // COMMAND ENCODER STUFF
     commandEncoder?.endEncoding()
     commandBuffer?.present(drawable)

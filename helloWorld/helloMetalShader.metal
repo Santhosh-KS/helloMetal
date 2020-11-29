@@ -1,19 +1,27 @@
 #include <metal_stdlib>
 using namespace metal;
 
-struct FirstVertex {
+struct FirstVertexIn {
+  float3 position;
+  float4 color;
+};
+
+struct FirstVertexOut {
   float4 position [[position]];
   float4 color;
 };
 
-vertex FirstVertex basic_vertex_function(const device float3 *verticies [[buffer(0)]],
-                                    uint vertexId [[vertex_id]]) {
-  FirstVertex v;
-  v.position = float4(verticies[vertexId], 1);
-  return v;
+vertex FirstVertexOut basic_vertex_function(const device FirstVertexIn *verticies [[buffer(0)]], uint vertexId [[vertex_id]]) {
+  
+  FirstVertexOut vOut;
+  vOut.position = float4(verticies[vertexId].position, 1);
+  vOut.color = verticies[vertexId].color * 3.5;
+ // vOut.color = verticies[vertexId].color;
+  return vOut;
+  
 }
 
-fragment float4 basic_fragment_function() {
-  return float4(1);
+fragment float4 basic_fragment_function(FirstVertexOut vIn [[stage_in]]) {
+  return vIn.color;
 }
 
