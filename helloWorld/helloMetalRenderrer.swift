@@ -9,6 +9,8 @@ class HelloMetalRenderrer:NSObject {
   var verticies:[Vertex]! = nil
   var indicies:[UInt16]! = nil
   
+  var constants = Constants()
+  
   
   init(device:MTLDevice) {
     super.init()
@@ -91,6 +93,9 @@ extension HelloMetalRenderrer:MTKViewDelegate {
     let commandBuffer = commandQueue.makeCommandBuffer()
     let commandEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
     commandEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
+    let deltaTime = 1 / Float(view.preferredFramesPerSecond)
+    constants.animateBy += deltaTime
+    commandEncoder?.setVertexBytes(&constants, length: MemoryLayout<Constants>.stride, index: 1)
     commandEncoder?.setRenderPipelineState(renderPipelineState)
     /* // Method used to draw basic approach
     commandEncoder?.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: verticies.count)

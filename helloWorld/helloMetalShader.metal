@@ -11,12 +11,18 @@ struct FirstVertexOut {
   float4 color;
 };
 
+struct FirstConstants {
+  float animateBy{0.0};
+};
+
 /// Per-vertex based approach
-vertex FirstVertexOut basic_vertex_function(FirstVertexIn vertexIn [[ stage_in ]]) {
+vertex FirstVertexOut basic_vertex_function(const FirstVertexIn vertexIn [[ stage_in ]], constant FirstConstants &constants [[ buffer(1) ]]) {
   
   FirstVertexOut vOut;
   vOut.position = float4(vertexIn.position, 1);
   vOut.color = vertexIn.color * 1.5;
+  vOut.position.x += cos(constants.animateBy);
+  vOut.position.y += sin(constants.animateBy);
  // vOut.color = verticies[vertexId].color;
   return vOut;
   
